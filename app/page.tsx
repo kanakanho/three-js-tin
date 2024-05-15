@@ -26,22 +26,7 @@ export default function Home() {
   const [buildingCentroid, setBuildingCentroid] = useState<Vector3>(new Vector3(0, 0, 0));
 
   useEffect(() => {
-    console.log(buildingDatas);
-    // location の重心を求める
-    let x = 0;
-    let y = 0;
-    let z = 0;
-    buildingDatas.forEach((buildingData) => {
-      buildingData.locations.forEach((location) => {
-        x += location.x;
-        y += location.y;
-        z += location.z;
-      });
-    });
-    x /= buildingDatas.length;
-    y /= buildingDatas.length;
-    z /= buildingDatas.length;
-    setBuildingCentroid(new Vector3(x, y, z));
+    setBuildingCentroid(new Vector3(15237312, 4186921.75, 3.10448294878006));
   }, [buildingDatas]);
 
   useEffect(() => {
