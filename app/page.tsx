@@ -33,13 +33,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log(buildingDatas);
-  }, [buildingDatas]);
-
-  useEffect(() => {
     // const { x, y } = latLonToMeters(gps.lat, gps.lon);
-    const x = 15237835.6572;
-    const y = 41866502.62523;
+    const x = 15237635.6572;
+    const y = 4186802.62523;
     setBias(new Vector3(x, y, 0));
   }, [gps]);
 
@@ -70,10 +66,10 @@ export default function Home() {
       <ARButton />
       <Canvas style={{ width: '100vw', height: '100vh' }}>
         <ThreeCamera cameraPosition={cameraPosition} setCameraPosition={setCameraPosition} />
-        <CameraPosition point={new Vector3(0, 0, 0)} />
+        <CameraPosition point={new Vector3(0, 2, 0)} />
         {buildingDatas.map((buildingData) => {
           const points = buildingData.locations.map((location) => {
-            return new Vector3(location.x - bias.x, location.y - bias.y, location.z - bias.z);
+            return new Vector3(location.x - bias.x, location.z - bias.z, location.y - bias.y);
           });
           return <CanvasComponent key={buildingData.id} points={points} />;
         })}
