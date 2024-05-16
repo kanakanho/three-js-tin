@@ -34,8 +34,7 @@ export default function Home() {
 
   useEffect(() => {
     // const { x, y } = latLonToMeters(gps.lat, gps.lon);
-    const x = 15237635.6572;
-    const y = 4186802.62523;
+    const { x, y } = latLonToMeters(35.1705901,136.8798116);
     setBias(new Vector3(x, y, 0));
   }, [gps]);
 
@@ -69,7 +68,7 @@ export default function Home() {
         <CameraPosition point={new Vector3(0, 2, 0)} />
         {buildingDatas.map((buildingData) => {
           const points = buildingData.locations.map((location) => {
-            return new Vector3(location.x - bias.x, location.z - bias.z, location.y - bias.y);
+            return new Vector3(location.x - bias.x, location.z - bias.z, -(location.y - bias.y));
           });
           return <CanvasComponent key={buildingData.id} points={points} />;
         })}
