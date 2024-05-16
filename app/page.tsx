@@ -6,11 +6,14 @@ import { useEffect, useState } from 'react';
 import { Vector3 } from 'three';
 import { CameraPosition } from './_components/CameraPosition';
 import { CanvasComponent } from './_components/Canavs';
-import { InputBox } from './_components/InputBox.';
 import { ThreeCamera } from './_components/ThreeCamera';
 import { BuildingData, DefaultLocation } from './_types/Building';
-import GPSLocation from './_types/GPSLocation';
 import { latLonToMeters } from './_utils/latLonToMeters';
+
+type GPSLocation = {
+  lat: number;
+  lon: number;
+};
 
 export default function Home() {
   const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 0, 0));
@@ -20,18 +23,18 @@ export default function Home() {
 
   const [gps, setGPS] = useState<GPSLocation>({ lat: 0, lon: 0 });
 
-  // useEffect(() => {
-  //   const watchId = navigator.geolocation.watchPosition((position) => {
-  //     setGPS({ lat: position.coords.latitude, lon: position.coords.longitude });
-  //   });
+  useEffect(() => {
+    const watchId = navigator.geolocation.watchPosition((position) => {
+      setGPS({ lat: position.coords.latitude, lon: position.coords.longitude });
+    });
 
-  //   // Cleanup function to stop watching the GPS when the component unmounts
-  //   return () => navigator.geolocation.clearWatch(watchId);
-  // }, []);
+    // Cleanup function to stop watching the GPS when the component unmounts
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, []);
 
   useEffect(() => {
-    const { x, y } = latLonToMeters(gps.lat, gps.lon);
-    // const { x, y } = latLonToMeters(35.1705901, 136.8798116);
+    // const { x, y } = latLonToMeters(gps.lat, gps.lon);
+    const { x, y } = latLonToMeters(35.1705901,136.8798116);
     setBias(new Vector3(x, y, 0));
   }, [gps]);
 
@@ -59,7 +62,6 @@ export default function Home() {
   }, [path, setBuildingDatas]);
   return (
     <>
-      <InputBox setGPS={setGPS} />
       <ARButton />
       <Canvas style={{ width: '100vw', height: '100vh' }}>
         <ThreeCamera cameraPosition={cameraPosition} setCameraPosition={setCameraPosition} />
