@@ -10,7 +10,6 @@ type Props = {
 };
 
 export const CanvasComponent: React.FC<Props> = ({ points }) => {
-  //   console.log(points);
   const [polygonVertices, setPolygonVertices] = useState<Vector3[][]>([]);
 
   useEffect(() => {

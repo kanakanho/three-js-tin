@@ -1,4 +1,4 @@
-'use clent';
+'use client';
 import { useThree } from '@react-three/fiber';
 import React, { useEffect } from 'react';
 import { Vector3 } from 'three';
