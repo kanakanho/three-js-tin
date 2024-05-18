@@ -35,8 +35,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const { x, y } = latLonToMeters(gps.lat, gps.lon);
     if (!gps.lat || !gps.lon) return;
+    const { x, y } = latLonToMeters(gps.lat, gps.lon);
     const elevationUrl = `https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lon=${gps.lon}&lat=${gps.lat}&outtype=JSON`;
     fetch(elevationUrl)
       .then((response) => response.json())

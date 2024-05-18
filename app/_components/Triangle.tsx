@@ -8,7 +8,7 @@ type Props = {
 
 export const TriangleComponent: React.FC<Props> = ({ vertices }) => {
   const geometry = new THREE.BufferGeometry().setFromPoints(vertices);
-  
+
   return (
     <mesh geometry={geometry}>
       <meshBasicMaterial color={'blue'} wireframe={false} side={THREE.DoubleSide} />
