@@ -17,10 +17,8 @@ type GPSLocation = {
 
 export default function Home() {
   const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 0, 0));
-  // const path = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_23;
   const path23 = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_23;
   const path24 = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_24;
-  // const [cityDatas, setCityDatas] = useState<BuildingData[]>([]);
   const [cityDatas23, setCityDatas23] = useState<BuildingData[]>([]);
   const [cityDatas24, setCityDatas24] = useState<BuildingData[]>([]);
   const [bias, setBias] = useState<Vector3>(new Vector3(0, 0, 0));
@@ -39,7 +37,7 @@ export default function Home() {
   useEffect(() => {
     // const { x, y } = latLonToMeters(gps.lat, gps.lon);
     const { x, y } = latLonToMeters(35.18444, 136.924762);
-    setBias(new Vector3(x, y, 0));
+    setBias(new Vector3(x, y, 20));
   }, [gps]);
 
   useEffect(() => {
@@ -102,14 +100,14 @@ export default function Home() {
           const points = cityData.locations.map((location) => {
             return new Vector3(location.x - bias.x, location.z - bias.z, -(location.y - bias.y));
           });
-          console.log(points);
+          if (points.length === 0) return;
           return <CanvasComponent key={cityData.id} points={points} />;
         })}
         {cityDatas24.map((cityData) => {
           const points = cityData.locations.map((location) => {
             return new Vector3(location.x - bias.x, location.z - bias.z, -(location.y - bias.y));
           });
-          console.log(points);
+          if (points.length === 0) return;
           return <CanvasComponent key={cityData.id} points={points} />;
         })}
         <EffectComposer>
