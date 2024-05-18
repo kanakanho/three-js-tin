@@ -2,7 +2,6 @@
 import { XR } from '@react-three/xr';
 import React, { useEffect, useState } from 'react';
 import { Vector3 } from 'three';
-import { BoxComponent } from './Box';
 import { TriangleComponent } from './Triangle';
 
 type Props = {
@@ -10,7 +9,6 @@ type Props = {
 };
 
 export const CanvasComponent: React.FC<Props> = ({ points }) => {
-  //   console.log(points);
   const [polygonVertices, setPolygonVertices] = useState<Vector3[][]>([]);
 
   useEffect(() => {
@@ -29,9 +27,6 @@ export const CanvasComponent: React.FC<Props> = ({ points }) => {
         <ambientLight />
         {polygonVertices.map((vertices, index) => (
           <TriangleComponent key={index} vertices={vertices} />
-        ))}
-        {polygonVertices.map((vertices, index) => (
-          <BoxComponent key={index} position={vertices[0]} />
         ))}
       </XR>
     </>
