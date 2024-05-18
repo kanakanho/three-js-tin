@@ -24,6 +24,7 @@ export default function Home() {
   const [bias, setBias] = useState<Vector3>(new Vector3(0, 0, 0));
 
   const [gps, setGPS] = useState<GPSLocation>({ lat: 0, lon: 0 });
+  const humanHeight = 1.6;
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition((position) => {
@@ -41,7 +42,7 @@ export default function Home() {
     fetch(elevationUrl)
       .then((response) => response.json())
       .then((data) => {
-        setBias(new Vector3(x, y, data.elevation));
+        setBias(new Vector3(x, y, data.elevation+humanHeight));
       })
       .catch((error: Error) => {
         console.error('Error:', error);
