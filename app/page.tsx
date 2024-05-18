@@ -35,8 +35,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // const { x, y } = latLonToMeters(gps.lat, gps.lon);
-    const { x, y } = latLonToMeters(35.18444, 136.924762);
+    const { x, y } = latLonToMeters(gps.lat, gps.lon);
+    // const { x, y } = latLonToMeters(35.18444, 136.924762);
     setBias(new Vector3(x, y, 20));
   }, [gps]);
 
