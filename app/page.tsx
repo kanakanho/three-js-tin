@@ -36,8 +36,16 @@ export default function Home() {
 
   useEffect(() => {
     const { x, y } = latLonToMeters(gps.lat, gps.lon);
-    // const { x, y } = latLonToMeters(35.18444, 136.924762);
-    setBias(new Vector3(x, y, 20));
+    const elevationUrl = `https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lon=${gps.lon}&lat=${gps.lat}&outtype=JSON`;
+    fetch(elevationUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setBias(new Vector3(x, y, data.elevation));
+      })
+      .catch((error: Error) => {
+        console.error('Error:', error);
+        setBias(new Vector3(x, y, 0));
+      });
   }, [gps]);
 
   useEffect(() => {
