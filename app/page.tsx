@@ -19,7 +19,9 @@ export default function Home() {
   const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 0, 0));
   // const path23 = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_23;
   // const path24 = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_24;
-  const pathAit = "http://192.168.101.49:60376/json/52376028_bldg_6697_op.json";
+  const basePath = process.env.NEXT_PUBLIC_BUILDING_DATA_PATH;
+  // biome-ignore lint/style/useTemplate: <explanation>
+  const pathAit = basePath + "52376028_bldg_6697_op.json";
   // const [cityDatas23, setCityDatas23] = useState<BuildingData[]>([]);
   // const [cityDatas24, setCityDatas24] = useState<BuildingData[]>([]);
   const [cityDatasAit, setCityDatasAit] = useState<BuildingData[]>([]);
