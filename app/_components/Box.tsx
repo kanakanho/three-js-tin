@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Vector3 } from 'three';
+import type React from "react";
+import type { Vector3 } from "three";
 
 type Props = {
   position: Vector3;

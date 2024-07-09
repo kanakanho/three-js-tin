@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import { PerspectiveCamera } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Camera, Vector3 } from 'three';
-import { Keys } from '../_types/InputKeys';
+import { PerspectiveCamera } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import type React from "react";
+import { useCallback, useEffect, useState } from "react";
+import { type Camera, Vector3 } from "three";
+import type { Keys } from "../_types/InputKeys";
 
 type ThreeCameraProps = {
   cameraPosition: Vector3;
@@ -44,12 +45,12 @@ export const ThreeCamera: React.FC<ThreeCameraProps> = ({ cameraPosition, setCam
   );
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
     };
   }, [handleKeyDown, handleKeyUp]);
 

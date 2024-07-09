@@ -1,14 +1,14 @@
-'use client';
-import { Canvas } from '@react-three/fiber';
-import { EffectComposer, SSAO } from '@react-three/postprocessing';
-import { ARButton } from '@react-three/xr';
-import { useEffect, useState } from 'react';
-import { Vector3 } from 'three';
-import { CameraPosition } from './_components/CameraPosition';
-import { CanvasComponent } from './_components/Canavs';
-import { ThreeCamera } from './_components/ThreeCamera';
-import { BuildingData, DefaultLocation } from './_types/Building';
-import { latLonToMeters } from './_utils/latLonToMeters';
+"use client";
+import { Canvas } from "@react-three/fiber";
+import { EffectComposer, SSAO } from "@react-three/postprocessing";
+import { ARButton } from "@react-three/xr";
+import { useEffect, useState } from "react";
+import { Vector3 } from "three";
+import { CameraPosition } from "./_components/CameraPosition";
+import { CanvasComponent } from "./_components/Canavs";
+import { ThreeCamera } from "./_components/ThreeCamera";
+import type { BuildingData, DefaultLocation } from "./_types/Building";
+import { latLonToMeters } from "./_utils/latLonToMeters";
 
 type GPSLocation = {
   lat: number;
@@ -17,10 +17,12 @@ type GPSLocation = {
 
 export default function Home() {
   const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 0, 0));
-  const path23 = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_23;
-  const path24 = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_24;
-  const [cityDatas23, setCityDatas23] = useState<BuildingData[]>([]);
-  const [cityDatas24, setCityDatas24] = useState<BuildingData[]>([]);
+  // const path23 = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_23;
+  // const path24 = process.env.NEXT_PUBLIC_BUILDING_DATA_URL_24;
+  const pathAit = "http://192.168.101.49:60376/json/52376028_bldg_6697_op.json";
+  // const [cityDatas23, setCityDatas23] = useState<BuildingData[]>([]);
+  // const [cityDatas24, setCityDatas24] = useState<BuildingData[]>([]);
+  const [cityDatasAit, setCityDatasAit] = useState<BuildingData[]>([]);
   const [bias, setBias] = useState<Vector3>(new Vector3(0, 0, 0));
 
   const [gps, setGPS] = useState<GPSLocation>({ lat: 0, lon: 0 });
@@ -42,46 +44,83 @@ export default function Home() {
     fetch(elevationUrl)
       .then((response) => response.json())
       .then((data) => {
-        setBias(new Vector3(x, y, data.elevation+humanHeight));
+        setBias(new Vector3(x, y, data.elevation + humanHeight));
       })
       .catch((error: Error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
         setBias(new Vector3(x, y, 0));
       });
   }, [gps]);
 
-  useEffect(() => {
-    fetch(`${path23}`)
-      .then((response) => response.json())
-      .then((data: any[]) => {
-        let buildingDatas: BuildingData[] = [];
-        data.forEach((d) => {
-          let locations: Vector3[] = [];
-          d.location.forEach((l: DefaultLocation) => {
-            if (l.lat <= 35.1875 && l.lat >= 35.18) {
-              const { x, y } = latLonToMeters(+l.lat, +l.lon);
-              const { height } = l;
-              const location: Vector3 = new Vector3(x, y, height);
-              locations.push(location);
-            }
-          });
-          const buildingData: BuildingData = {
-            id: d.id,
-            locations: locations,
-          };
-          buildingDatas.push(buildingData);
-        });
-        setCityDatas23(buildingDatas);
-      });
-  }, [path23, setCityDatas23]);
+  // // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // useEffect(() => {
+  //   fetch(`${path23}`)
+  //     .then((response) => response.json())
+  //     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  //     .then((data: any[]) => {
+  //       const buildingDatas: BuildingData[] = [];
+  //       // biome-ignore lint/complexity/noForEach: <explanation>
+  //       data.forEach((d) => {
+  //         const locations: Vector3[] = [];
+  //         // biome-ignore lint/complexity/noForEach: <explanation>
+  //         d.location.forEach((l: DefaultLocation) => {
+  //           if (l.lat <= 35.1875 && l.lat >= 35.18) {
+  //             const { x, y } = latLonToMeters(+l.lat, +l.lon);
+  //             const { height } = l;
+  //             const location: Vector3 = new Vector3(x, y, height);
+  //             locations.push(location);
+  //           }
+  //         });
+  //         const buildingData: BuildingData = {
+  //           id: d.id,
+  //           locations: locations,
+  //         };
+  //         buildingDatas.push(buildingData);
+  //       });
+  //       setCityDatas23(buildingDatas);
+  //     });
+  // }, [path23, setCityDatas23]);
 
+  // // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // useEffect(() => {
+  //   fetch(`${path24}`)
+  //     .then((response) => response.json())
+  //     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  //     .then((data: any[]) => {
+  //       const buildingDatas: BuildingData[] = [];
+  //       // biome-ignore lint/complexity/noForEach: <explanation>
+  //       data.forEach((d) => {
+  //         const locations: Vector3[] = [];
+  //         // biome-ignore lint/complexity/noForEach: <explanation>
+  //         d.location.forEach((l: DefaultLocation) => {
+  //           if (l.lat <= 35.1875 && l.lat >= 35.18) {
+  //             const { x, y } = latLonToMeters(+l.lat, +l.lon);
+  //             const { height } = l;
+  //             const location: Vector3 = new Vector3(x, y, height);
+  //             locations.push(location);
+  //           }
+  //         });
+  //         const buildingData: BuildingData = {
+  //           id: d.id,
+  //           locations: locations,
+  //         };
+  //         buildingDatas.push(buildingData);
+  //       });
+  //       setCityDatas24(buildingDatas);
+  //     });
+  // }, [path24, setCityDatas24]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    fetch(`${path24}`)
+    fetch(`${pathAit}`)
       .then((response) => response.json())
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       .then((data: any[]) => {
-        let buildingDatas: BuildingData[] = [];
+        const buildingDatas: BuildingData[] = [];
+        // biome-ignore lint/complexity/noForEach: <explanation>
         data.forEach((d) => {
-          let locations: Vector3[] = [];
+          const locations: Vector3[] = [];
+          // biome-ignore lint/complexity/noForEach: <explanation>
           d.location.forEach((l: DefaultLocation) => {
             if (l.lat <= 35.1875 && l.lat >= 35.18) {
               const { x, y } = latLonToMeters(+l.lat, +l.lon);
@@ -96,17 +135,17 @@ export default function Home() {
           };
           buildingDatas.push(buildingData);
         });
-        setCityDatas24(buildingDatas);
+        setCityDatasAit(buildingDatas);
       });
-  }, [path24, setCityDatas24]);
+  }, [pathAit, setCityDatasAit]);
 
   return (
     <>
       <ARButton />
-      <Canvas style={{ width: '100vw', height: '100vh' }}>
+      <Canvas style={{ width: "100vw", height: "100vh" }}>
         <ThreeCamera cameraPosition={cameraPosition} setCameraPosition={setCameraPosition} />
         <CameraPosition point={new Vector3(0, 16, 0)} />
-        {cityDatas23.map((cityData) => {
+        {/* {cityDatas23.map((cityData) => {
           const points = cityData.locations.map((location) => {
             return new Vector3(location.x - bias.x, location.z - bias.z, -(location.y - bias.y));
           });
@@ -114,6 +153,13 @@ export default function Home() {
           return <CanvasComponent key={cityData.id} points={points} />;
         })}
         {cityDatas24.map((cityData) => {
+          const points = cityData.locations.map((location) => {
+            return new Vector3(location.x - bias.x, location.z - bias.z, -(location.y - bias.y));
+          });
+          if (points.length === 0) return;
+          return <CanvasComponent key={cityData.id} points={points} />;
+        })} */}
+        {cityDatasAit.map((cityData) => {
           const points = cityData.locations.map((location) => {
             return new Vector3(location.x - bias.x, location.z - bias.z, -(location.y - bias.y));
           });

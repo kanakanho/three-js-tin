@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import * as THREE from 'three';
+"use client";
+import type React from "react";
+import * as THREE from "three";
 
 type Props = {
   vertices: THREE.Vector3[];
@@ -11,7 +11,7 @@ export const TriangleComponent: React.FC<Props> = ({ vertices }) => {
 
   return (
     <mesh geometry={geometry}>
-      <meshBasicMaterial color={'blue'} wireframe={false} side={THREE.DoubleSide} />
+      <meshBasicMaterial color={"blue"} wireframe={false} side={THREE.DoubleSide} />
     </mesh>
   );
 };

@@ -1,8 +1,9 @@
-'use client';
-import { XR } from '@react-three/xr';
-import React, { useEffect, useState } from 'react';
-import { Vector3 } from 'three';
-import { TriangleComponent } from './Triangle';
+"use client";
+import { XR } from "@react-three/xr";
+import type React from "react";
+import { useEffect, useState } from "react";
+import type { Vector3 } from "three";
+import { TriangleComponent } from "./Triangle";
 
 type Props = {
   points: Vector3[];
@@ -26,6 +27,7 @@ export const CanvasComponent: React.FC<Props> = ({ points }) => {
       <XR>
         <ambientLight />
         {polygonVertices.map((vertices, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <TriangleComponent key={index} vertices={vertices} />
         ))}
       </XR>

@@ -1,4 +1,4 @@
-import { MathUtils } from 'three';
+import { MathUtils } from "three";
 
 // Function to convert lat lon to meters
 export function latLonToMeters(lat: number, lon: number) {
